@@ -1,0 +1,806 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>cars.zim | {% block title %} {% endblock title %}</title>
+
+		<link
+			rel="stylesheet"
+			href="{% static 'vendor/fontawesome/css/all.min.css' %}"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}"
+		/>
+
+		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+	</head>
+
+	<body class="container-xxl px-0">
+		<header id="header" class="container-xxl p-0 fixed-top bg-dark shadow-lg">
+			<nav class="navbar navbar-expand-lg navbar-dark p-1">
+				<div class="container-fluid">
+					<a class="navbar-brand fs-2 mb-2" href="{% url 'home' %}"
+						>cars<span class="text-primary">.zim</span></a
+					>
+
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div
+						class="collapse navbar-collapse"
+						id="navbarSupportedContent"
+					>
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link active" href="{% url 'home' %}"
+									>Home</a
+								>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'offers' %}"
+									>Offers</a
+								>
+							</li>
+  
+							{% if request.user.is_authenticated %}
+								<li class="nav-item">
+									<a class="nav-link" href="{{ request.user.get_absolute_url }}"
+										>My Account</a
+									>
+								</li>
+
+								<li class="nav-item d-lg-none">
+									<a class="nav-link" href="{% url 'create-offer' %}"
+										>New Offer</a
+									>
+								</li>
+							{% else %}
+								<li class="nav-item d-lg-none">
+									<a class="nav-link" href="{% url 'user-login' %}">Login</a>
+								</li>
+
+								<li class="nav-item d-lg-none">
+									<a class="nav-link" href="{% url 'user-signup' %}"
+										>Signup</a
+									>
+								</li>
+							{% endif %}
+
+						</ul>
+
+						<div class="d-none d-lg-flex">
+							{% if request.user.is_authenticated %}
+								<a
+									href="{% url 'create-offer' %}"
+									class="new-offer-plus text-white me-2 px-2 fs-4"
+								>
+									<i class="bi bi-plus-circle"></i>
+								</a>
+
+								<a
+									href="{% url 'notifications' %}"
+									class="btn btn-primary position-relative me-2 px-2"
+								>
+									<i class="bi bi-bell"></i>
+									{% if new_notifications %}
+										<span
+											class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+										>
+											{{ new_notifications.count }}
+											<span class="visually-hidden"
+												>unread messages</span
+											>
+										</span>
+									{% endif %}
+								</a>
+							{% else %}
+								<a
+									class="btn btn-outline-light me-2 d-flex align-items-center"
+									href="{% url 'user-login' %}"
+								>
+									Login
+								</a>
+
+								<a
+									class="btn btn-primary me-2 d-flex align-items-center"
+									href="{% url 'user-signup' %}"
+								>
+									Signup
+								</a>
+							{% endif %}
+
+							<form action="{% url 'offers' %}" class="d-flex">
+								<input
+									name="q"
+									class="form-control"
+									type="search"
+									placeholder="Search"
+									aria-label="Search"
+								/>
+							</form>
+						</div>
+					</div>
+				</div>
+			</nav>
+
+			{% if messages %} {% for message in messages %}
+				<div
+					class="my-0 alert alert-{{ message.tags }} alert-dismissible fade show"
+					role="alert"
+				>
+					{{ message }}
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="alert"
+						aria-label="Close"
+					></button>
+				</div>
+			{% endfor %} {% endif %}
+		</header>
+
+		{% block modals %} 
+			<div class="modals">
+				<div
+					id="logoutmodal"
+					class="modal fade"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="logoutLabel"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="logoutLabel">Logout</h5>
+
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+
+							<div class="modal-body text-center">
+								Are you sure you want to logout?
+							</div>
+
+							<div class="modal-footer text-center d-block">
+								<button
+									type="button"
+									class="btn btn-success"
+									data-bs-dismiss="modal"
+								>
+									Cancel
+								</button>
+
+								<a href="{% url 'user-logout' %}" class="btn btn-dark">
+									Logout
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div
+					id="removemodal"
+					class="modal fade"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="removeLabel"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog modal-dialog-centered">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="removeLabel">
+									Remove This Vehicle
+								</h5>
+
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+
+							<div class="modal-body text-center">
+								Are you sure you want to take down this offer? It
+								cannot be undone.
+							</div>
+
+							<div class="modal-footer text-center d-block">
+								<button
+									type="button"
+									class="btn btn-success"
+									data-bs-dismiss="modal"
+								>
+									Cancel
+								</button>
+
+								<a id="removeLink" href="" class="btn btn-dark">
+									Remove
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endblock modals %} 
+		
+		{% block offcanvases %} 
+			<div class="offcanvases">
+				<div
+					class="offcanvas bg-whitesmoke offcanvas-start"
+					tabindex="-1"
+					id="shortlistoffcanvas"
+					aria-labelledby="shortlistOffcanvasLabel"
+				>
+					<div class="offcanvas-header">
+						<h5 class="offcanvas-title" id="shortlistOffcanvasLabel">
+							Shortlisted Offers
+						</h5>
+
+						<button
+							type="button"
+							class="btn-close text-reset"
+							data-bs-dismiss="offcanvas"
+							aria-label="Close"
+						></button>
+					</div>
+
+					<div class="offcanvas-body">
+						<div>
+							<i class="bi bi-info-circle pe-2"></i>Shortlist offers
+							that you may be interested in for viewing later. Your
+							shortlist can only be cleared by you.
+						</div>
+
+						<div class="container-fluid my-3">
+							<div class="row my-3">
+								<div class="col-10 px-0 mx-0">
+									<a class="col-8 text-decoration-none" href="#"
+										>Volvo XC90 | USD 43 000 | 22 feb 2022</a
+									>
+								</div>
+
+								<div class="col-1">
+									<a
+										href=""
+										class="col-2 text-decoration-none px-2"
+										><i class="bi bi-trash"></i
+									></a>
+								</div>
+							</div>
+
+							<div class="row my-3">
+								<div class="col-10 px-0 mx-0">
+									<a class="col-8 text-decoration-none" href="#"
+										>Volvo XC90 | USD 43 000 | 22 feb 2022</a
+									>
+								</div>
+
+								<div class="col-1">
+									<a
+										href=""
+										class="col-2 text-decoration-none px-2"
+										><i class="bi bi-trash"></i
+									></a>
+								</div>
+							</div>
+
+							<div class="row my-3">
+								<div class="col-10 px-0 mx-0">
+									<a class="col-8 text-decoration-none" href="#"
+										>Volvo XC90 | USD 43 000 | 22 feb 2022</a
+									>
+								</div>
+
+								<div class="col-1">
+									<a
+										href=""
+										class="col-2 text-decoration-none px-2"
+										><i class="bi bi-trash"></i
+									></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		
+				<div
+					class="offcanvas bg-whitesmoke offcanvas-start"
+					tabindex="-1"
+					id="filtersoffcanvas"
+					aria-labelledby="filtersoffcanvasLabel"
+				>
+					<div class="offcanvas-header">
+						<h5 class="offcanvas-title" id="filtersoffcanvasLabel">
+							Filters
+						</h5>
+
+						<button
+							type="button"
+							class="btn-close text-reset"
+							data-bs-dismiss="offcanvas"
+							aria-label="Close"
+						></button>
+					</div>
+
+					<div class="offcanvas-body">
+						<form method="get">
+							<div class="py-3 d-flex align-items-center">
+								<h2 class="mx-2">Filters</h2>
+								<button type="submit" class="btn btn-primary mx-2">
+									Apply
+								</button>
+								<button type="reset" class="btn btn-danger">
+									Reset
+								</button>
+							</div>
+
+							<div class="my-2 p-2 filter">
+								<h4>Price-bracket</h4>
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										USD 10k -
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										USD 10k - 50k
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										USD 50k - 100k
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault2"
+										checked
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault2"
+									>
+										USD 100k +
+									</label>
+								</div>
+							</div>
+
+							<div class="my-2 p-2 filter">
+								<h4>Location</h4>
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										value=""
+										id="flexCheckDefault"
+									/>
+									<label
+										class="form-check-label"
+										for="flexCheckDefault"
+									>
+										Harare
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										value=""
+										id="flexCheckChecked"
+										checked
+									/>
+									<label
+										class="form-check-label"
+										for="flexCheckChecked"
+									>
+										Bulawayo
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										value=""
+										id="flexCheckDefault"
+									/>
+									<label
+										class="form-check-label"
+										for="flexCheckDefault"
+									>
+										Vic Falls
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										value=""
+										id="flexCheckDefault"
+									/>
+									<label
+										class="form-check-label"
+										for="flexCheckDefault"
+									>
+										Masvingo
+									</label>
+								</div>
+							</div>
+
+							<div class="my-2 p-2 filter">
+								<h4>Mileage</h4>
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										Km 10k -
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										Km 10k - 50k
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										Km 50k - 100k
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="radio"
+										name="flexRadioDefault"
+										id="flexRadioDefault2"
+										checked
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault2"
+									>
+										Km 100k +
+									</label>
+								</div>
+							</div>
+
+							<div class="my-2 p-2 filter">
+								<h4>Brand</h4>
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										Toyota
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										Mercedes-Benz
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										name="flexRadioDefault"
+										id="flexRadioDefault1"
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault1"
+									>
+										Nissan
+									</label>
+								</div>
+
+								<div class="form-check">
+									<input
+										class="form-check-input"
+										type="checkbox"
+										name="flexRadioDefault"
+										id="flexRadioDefault2"
+										checked
+									/>
+									<label
+										class="form-check-label"
+										for="flexRadioDefault2"
+									>
+										Jeep
+									</label>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		{% endblock offcanvases %} 
+		
+
+		{% block content %} 
+		{% endblock content %} 
+		
+		{% block footer %}
+			<footer class="p-4 mt-5 bg-dark text-gray">
+				<div class="container">
+					<div class="row justify-content-around">
+						<div class="col-5 col-md-2 my-2 me-2">
+							<h5>Useful Links</h5>
+							<ul class="nav flex-column">
+								<li class="nav-item mb-2">
+									<a
+										href="about.html"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										About
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="login.html"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Account
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										FAQs
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="/admin/"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Admin
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="col-5 col-md-2 my-2 me-2">
+							<h5>Get In Touch</h5>
+							<ul class="nav flex-column">
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Contact
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Report
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Recommend
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="col-md-2 my-2 me-2">
+							<h5>Other Services</h5>
+							<ul
+								class="nav flex-row flex-md-column justify-content-between"
+							>
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Advertise
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Car Hire
+									</a>
+								</li>
+
+								<li class="nav-item mb-2">
+									<a
+										href="#"
+										class="nav-link p-0 text-decoration-underline"
+									>
+										Parts & Accessories
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="col-md-4 my-2">
+							<form>
+								<h5>Dont Have An Account?</h5>
+								<p>
+									Create an account to start advertising offers, free
+									of charge. No hidden costs.
+								</p>
+								<div class="d-flex w-100 gap-2">
+									<label for="newsletter1" class="visually-hidden">
+										Email address
+									</label>
+									<input
+										id="newsletter1"
+										type="text"
+										class="form-control"
+										placeholder="Email address"
+									/>
+									<button class="btn btn-primary" type="button">
+										Proceed
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+					<div
+						class="flex-column-reverse d-flex flex-md-row justify-content-between pt-4 mt-4 border-top border-gray"
+					>
+						<p>&copy; 2021 cars.zim. All rights reserved.</p>
+						<ul class="list-unstyled d-flex">
+							<li class="ms-3">
+								<a class="social-link" href="#">
+									<i class="bi bi-linkedin"></i>
+								</a>
+							</li>
+
+							<li class="ms-3">
+								<a class="social-link" href="#"
+									><i class="bi bi-github"></i>
+								</a>
+							</li>
+
+							<li class="ms-3">
+								<a class="social-link" href="#">
+									<i class="bi bi-twitter"></i
+								></a>
+							</li>
+
+							<li class="ms-3">
+								<a class="social-link" href="#">
+									<i class="bi bi-instagram"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+		{% endblock footer %}
+
+		<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/custom.js' %}"></script>
+	</body>
+</html>
