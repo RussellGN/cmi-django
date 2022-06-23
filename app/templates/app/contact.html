@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>cars.zim | Contact</title>
+
+		<link
+			rel="stylesheet"
+			href="assets/vendor/fontawesome/css/all.min.css"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+		/>
+
+		<link
+			rel="stylesheet"
+			href="assets/vendor/bootstrap/css/bootstrap.min.css"
+		/>
+
+		<link rel="stylesheet" href="assets/css/style.css" />
+	</head>
+
+	<body>
+		<header id="header" class="fixed-top bg-dark shadow-lg">
+			<nav class="navbar navbar-expand-lg navbar-dark p-1">
+				<div class="container-fluid">
+					<a class="navbar-brand fs-2 mb-2" href="{% url 'home' %}"
+						>cars<span class="text-primary">.zim</span></a
+					>
+
+					<button
+						class="navbar-toggler"
+						type="button"
+						data-bs-toggle="collapse"
+						data-bs-target="#navbarSupportedContent"
+						aria-controls="navbarSupportedContent"
+						aria-expanded="false"
+						aria-label="Toggle navigation"
+					>
+						<span class="navbar-toggler-icon"></span>
+					</button>
+
+					<div
+						class="collapse navbar-collapse"
+						id="navbarSupportedContent"
+					>
+						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'home' %}">Home</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" href="{% url 'offers' %}"
+									>Offers</a
+								>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" href="account.html"
+									>Account</a
+								>
+							</li>
+
+							<li class="nav-item d-lg-none">
+								<a class="nav-link" href="{% url 'create-offer' %}"
+									>New Offer</a
+								>
+							</li>
+
+							<li class="nav-item d-lg-none">
+								<a class="nav-link" href="login.html">Login</a>
+							</li>
+
+							<li class="nav-item d-lg-none">
+								<a class="nav-link" href="signup.html"
+									>Signup</a
+								>
+							</li>
+						</ul>
+
+						<div class="d-none d-lg-flex">
+							<a
+								href="{% url 'create-offer' %}"
+								class="new-offer-plus text-white me-2 px-2 fs-4"
+							>
+								<i class="bi bi-plus-circle"></i>
+							</a>
+
+							<a
+								href="{% url 'notifications' %}"
+								class="btn btn-primary position-relative me-2 px-2"
+							>
+								<i class="bi bi-bell"></i>
+								<span
+									class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+								>
+									99+
+									<span class="visually-hidden"
+										>unread messages</span
+									>
+								</span>
+							</a>
+
+							<a
+								class="btn btn-outline-light me-2 d-flex align-items-center"
+								href="login.html"
+							>
+								Login
+							</a>
+
+							<a
+								class="btn btn-primary me-2 d-flex align-items-center"
+								href="signup.html"
+							>
+								Signup
+							</a>
+
+							<form action="" class="d-flex">
+								<input
+									name="q"
+									class="form-control"
+									type="search"
+									placeholder="Search"
+									aria-label="Search"
+								/>
+							</form>
+						</div>
+					</div>
+				</div>
+			</nav>
+
+			<!-- <div
+				class="my-0 alert alert-success alert-dismissible fade show"
+				role="alert"
+			>
+				<strong>Holy guacamole!</strong> You should check in on some of
+				those fields below.
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="alert"
+					aria-label="Close"
+				></button>
+			</div> -->
+		</header>
+
+		<main class="my-4">
+			<h1 class="text-center mb-3">Contact</h1>
+
+			<form class="container p-3">
+				<!-- <div id="recommendations">
+					<p class="mx-auto text-center" style="max-width: 600px">
+						Your feedback is valuable to us. Share your thoughts and
+						suggestions and help us make this platform better than
+						it already is.
+					</p>
+				</div> -->
+
+				<!-- <div id="report">
+					<p class="mx-auto text-center" style="max-width: 600px">
+						Your security and privacy matters on our platform.
+						Report abuse and any fraudulent activity here.
+					</p>
+				</div> -->
+
+				<div class="row">
+					<div class="col-md-6 order-md-2">
+						<h5 class="text-success text-center p-2">
+							Write To Us
+						</h5>
+
+						<div class="row">
+							<div class="col-6">
+								<div class="form-floating mb-3">
+									<input
+										name="name"
+										type="text"
+										id="floatingInput"
+										class="form-control"
+										placeholder="Your Name"
+									/>
+									<label for="floatingInput">Your Name</label>
+								</div>
+							</div>
+
+							<div class="col-6">
+								<div class="form-floating mb-3">
+									<input
+										name="email"
+										type="email"
+										id="floatingInput"
+										class="form-control"
+										placeholder="Your Email"
+									/>
+									<label for="floatingInput"
+										>Your Email</label
+									>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-floating mb-3">
+							<input
+								name="subject"
+								type="text"
+								id="floatingInput"
+								class="form-control"
+								placeholder="Subject"
+							/>
+							<label for="floatingInput">Subject</label>
+						</div>
+
+						<div class="mb-3">
+							<div class="mb-3">
+								<textarea
+									class="form-control"
+									name="message"
+									rows="4"
+								>
+Your Message</textarea
+								>
+							</div>
+						</div>
+
+						<div class="text-center">
+							<button class="btn btn-success m-2" type="submit">
+								Send
+							</button>
+
+							<button class="btn btn-danger" type="reset">
+								Reset
+							</button>
+						</div>
+					</div>
+
+					<div class="col contact-details py-4">
+						<div class="my-3">
+							<i class="bi bi-telephone-fill bg-success"></i>
+							<h4>Call:</h4>
+							<p>+263 719668444</p>
+						</div>
+
+						<div class="my-3">
+							<i class="bi bi-envelope-fill bg-success"></i>
+							<h4>Email:</h4>
+							<p>inquiries@cars.zim</p>
+						</div>
+
+						<div class="my-3">
+							<i class="bi bi-geo-alt-fill bg-success"></i>
+							<h4>Location:</h4>
+							<p>Harare</p>
+						</div>
+					</div>
+				</div>
+			</form>
+		</main>
+
+		<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="assets/js/custom.js"></script>
+		<script src="assets/js/main.js"></script>
+	</body>
+</html>

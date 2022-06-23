@@ -1,0 +1,517 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Offers {% endblock title %} 
+
+{% block modals %} 
+	{{ block.super }} 
+{% endblock modals %} 
+
+{% block offcanvases %} 
+	{{ block.super }} 
+{% endblock offcanvases%} 
+
+{% block content %}
+	<a
+		class="d-lg-none btn btn-success position-fixed bottom-0 end-0 m-2 shadow-lg"
+		data-bs-toggle="offcanvas"
+		href="#filtersoffcanvas"
+		role="button"
+		id="mobile-filters-button"
+		aria-controls="filtersoffcanvas"
+	>
+		Filters<i class="bi bi-arrow-right-short ms-2"></i>
+	</a>
+
+	<main class="container-fluid my-5">
+		<div class="row justify-content-around position-relative">
+			<div
+				class="d-none d-lg-block col-lg-3 p-0 offers-sidebar sticky-lg-top shadow"
+			>
+				<form>
+					<input type="hidden" name="q" value="{% if query %} {{ query }} {% endif %}">
+
+					<div class="py-3 d-flex align-items-center">
+						<h2 class="mx-2">Filters</h2>
+						<button type="submit" class="btn btn-primary mx-2">
+							Apply
+						</button>
+						<a href="{% url 'offers' %}" class="btn btn-danger">
+							Reset
+						</a>
+					</div>
+
+					<div class="my-2 p-2 filter">
+						<h4>Price-bracket</h4>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="price-bracket"
+								value="1"
+								{% if price_bracket == '1' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								USD 10k -
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="price-bracket"
+								value="2"
+								{% if price_bracket == '2' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								USD 10k - 50k
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="price-bracket"
+								value="3"
+								{% if price_bracket == '3' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								USD 50k - 100k
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="price-bracket"
+								value="4"
+								{% if price_bracket == '4' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								USD 100k +
+							</label>
+						</div>
+					</div>
+
+					<div class="my-2 p-2 filter">
+						<h4>Location</h4>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="location"
+								value="harare"
+								{% if location == 'harare' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Harare
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="location"
+								value="bulawayo"
+								{% if location == 'bulawayo' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Bulawayo
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="location"
+								value="victoria"
+								{% if location == 'victoria' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Victoria Falls
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="location"
+								value="masvingo"
+								{% if location == 'masvingo' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Masvingo
+							</label>
+						</div>
+					</div>
+
+					<div class="my-2 p-2 filter">
+						<h4>Mileage</h4>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="mileage"
+								value="1"
+								{% if mileage == '1' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Km 10k -
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="mileage"
+								value="2"
+								{% if mileage == '2' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Km 10k - 50k
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="mileage"
+								value="3"
+								{% if mileage == '3' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Km 50k - 100k
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="mileage"
+								value="4"
+								{% if mileage == '4' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Km 100k +
+							</label>
+						</div>
+					</div>
+
+					<div class="my-2 p-2 filter">
+						<h4>Popular Brands</h4>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="brand"
+								value="toyota"
+								{% if brand == 'toyota' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Toyota
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="brand"
+								value="mercedes"
+								{% if brand == 'mercedes' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>							
+								Mercedes-Benz
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="brand"
+								value="nissan"
+								{% if brand == 'nissan' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Nissan
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="brand"
+								value="jeep"
+								{% if brand == 'jeep' %}
+									checked
+								{% endif %}
+							/>
+							<label
+								class="form-check-label"
+							>
+								Jeep
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div class="col-lg-8">
+				<div class="row my-4 px-2 search-controls">
+					<form class="input-group" action="{% url 'offers' %}">
+						<input
+							name="q"
+							placeholder="Type anything..."
+							value="{% if query %}{{ query }}{% endif %}"
+							type="text"
+							class="form-control p-3"
+							aria-label="Text input with dropdown button"
+						/>
+
+						<input type="hidden" name="vt" id="vt" 
+						value="{% if vehicle_type %}{{ vehicle_type }}{% endif %}">
+
+						<div class="d-flex bg-primary">
+						  <label for="sort_by" class="form-label text-white py-1 px-2">Sort By</label>
+						  <select class="form-control text-dark" name="sort_by">
+							<option  value="1" {% if not sort_by or sort_by == '1' %}selected{% endif %}>Latest</option>
+							<option  value="2" {% if not sort_by or sort_by == '2' %}selected{% endif %}>Oldest</option>
+							<option  value="3" {% if not sort_by or sort_by == '3' %}selected{% endif %}>Price<i class="bi bi-arrow-up ms-2"></i></option>
+							<option  value="4" {% if not sort_by or sort_by == '4' %}selected{% endif %}>Price<i class="bi bi-arrow-down ms-2"></i></option>
+						  </select>
+						</div>
+
+
+						{% comment %}
+						<button
+							class="btn btn-primary dropdown-toggle"
+							type="button"
+							data-bs-toggle="dropdown"
+							aria-expanded="false"
+						>
+							Sort By
+						</button>
+						{% endcomment %}
+
+						<ul class="dropdown-menu dropdown-menu-end">
+							<li>
+								<a
+									class="dropdown-item"
+									href="{% url 'offers' %}/date-d"
+									>Latest</a
+								>
+							</li>
+
+							<li>
+								<a
+									class="dropdown-item"
+									href="{% url 'offers' %}/date-a"
+									>Oldest</a
+								>
+							</li>
+
+							<li>
+								<a
+									class="dropdown-item"
+									href="{% url 'offers' %}/price-a"
+									>Price <i class="bi bi-arrow-up"></i
+								></a>
+							</li>
+
+							<li>
+								<a
+									class="dropdown-item"
+									href="{% url 'offers' %}/price-d"
+									>Price <i class="bi bi-arrow-down"></i
+								></a>
+							</li>
+						</ul>
+					</form>
+				</div>
+
+				<div class="container-fluid">
+					<div class="p-2 tabs container-fluid">
+						<nav
+							class="nav nav-tabs row justify-content-center p-0"
+						>
+							<a	
+								onclick="getType('L')"
+								class="col-2 nav-link mx-1 px-0 text-center
+								{% if not vehicle_type or vehicle_type == 'L'%}
+									active show
+								{% endif %}
+								"
+								{% comment %}
+									data-bs-toggle="tab"
+									data-bs-target="#tab-1"
+								{% endcomment %}
+							>
+								<i class="fas fa-car fs-2"></i>
+							</a>
+
+							<a
+								onclick="getType('H')"
+								class="col-2 nav-link mx-1 px-0 text-center
+								{% if vehicle_type == 'H'%}
+									active show
+								{% endif %}
+								"
+							>
+								<i class="fas fa-truck fs-2"></i>
+							</a>
+
+							<a
+								onclick="getType('T')"
+								class="col-2 nav-link mx-1 px-0 text-center
+								{% if vehicle_type == 'T'%}
+									active show
+								{% endif %}
+								"
+							>
+								<i class="fas fa-motorcycle fs-2"></i>
+							</a>
+
+							<a
+								onclick="getType('O')"
+								class="col-2 nav-link mx-1 px-0 text-center
+								{% if vehicle_type == 'O'%}
+									active show
+								{% endif %}
+								"
+							>
+								<i class="fas fa-trailer fs-2"></i>
+							</a>
+						</nav>
+
+						<div
+							class="border-top border-3 border-primary"
+						>
+								{% if query %}
+									<h5 class="mt-4 text-center">Results for '{{ query }}'</h5>
+								{% endif %}	
+
+								{% if offers %}
+					
+									{% for offer in offers %}
+										{% include 'app/offer_single.html' %} 
+									{% endfor %}
+									
+									<nav aria-label="Page navigation" class="my-5">
+										<ul class="pagination justify-content-center">
+											<li class="page-item disabled">
+												<a class="page-link">Previous</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link" href="#">1</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link" href="#">2</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link" href="#">3</a>
+											</li>
+											<li class="page-item">
+												<a class="page-link" href="#">Next</a>
+											</li>
+										</ul>
+									</nav>
+								{% else %}
+									<h5 class="p-4 text-center">No results</h5>
+								{% endif %}							
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<script>
+		function getType(typ){
+			vt = document.getElementById('vt')
+			vt.value = typ
+			vt.parentElement.submit()
+		}
+	</script>
+{% endblock content %} 
+
+{% block footer %} 
+	{{ block.super }} 
+{% endblock footer %}
+
+
+

@@ -1,0 +1,262 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Settings {% endblock title %} 
+
+{% block modals %} 
+	{{ block.super }}
+{% endblock modals %}
+
+{% block offcanvases %}
+	{{ block.super }}
+{% endblock offcanvases %}
+
+{% block content %}
+	<main class="my-5">
+		<h1 class="text-center py-2">
+			Settings <i class="bi bi-gear"></i>
+		</h1>
+
+		<div class="container p-2">
+			<div class="accordion accordion-flush" id="settingsAccordion">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingOne">
+						<button
+							class="accordion-button lead collapsed"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#flush-collapseOne"
+							aria-expanded="false"
+							aria-controls="flush-collapseOne"
+						>
+							<div class="notification-header">
+								<h5 class="p-0 m-0">
+									<i class="bi bi-bell pe-2"></i
+									>Notifications
+								</h5>
+							</div>
+						</button>
+					</h2>
+
+					<div
+						id="flush-collapseOne"
+						class="accordion-collapse collapse px-5"
+						aria-labelledby="flush-headingOne"
+						data-bs-parent="#settingsAccordion"
+					>
+						<div class="accordion-body">
+							<h6>Select how you receive notifications.</h6>
+
+							<form method="post" action="{% url 'update-inbox-settings' %}">
+								{% csrf_token %}
+
+								<div class="form-radio py-1">
+									<input
+										class="form-radio-input"
+										type="radio"
+										name="notification_inbox"
+										value="S"
+										id="smsradio"
+										{% if not request.user.phone_number %}
+											disabled
+										{% endif %}
+
+										{% if request.user.notification_inbox == 'S' %}
+											checked
+										{% endif %}
+									/>
+
+									<label
+										class="form-radio-label"
+										for="smsradio"
+									>
+										SMS
+									</label>
+
+									{% if not request.user.phone_number %}
+									<small class="text-success px-3">
+										<i class="bi bi-info-circle"></i>
+										You'll need to provide your phone
+										number.
+										<a href="{% url 'update-profile' %}" class="normal-link"
+											>edit account details</a
+										>
+									</small>
+									{% endif %}
+								</div>
+
+								<div class="form-radio py-1">
+									<input
+										class="form-radio-input"
+										type="radio"
+										name="notification_inbox"
+										value="E"
+										id="emailradio"
+										{% if request.user.notification_inbox == 'E' %}
+											checked
+										{% endif %}
+									/>
+
+									<label
+										class="form-radio-label"
+										for="emailradio"
+									>
+										Email
+									</label>
+								</div>
+								
+								<div class="form-radio py-1">
+									<input
+										class="form-radio-input"
+										type="radio"
+										name="notification_inbox"
+										value="B"
+										id="bothradio"
+										{% if request.user.notification_inbox == 'B' %}
+											checked
+										{% endif %}
+
+										{% if not request.user.phone_number %}
+											disabled
+										{% endif %}
+									/>
+
+									<label
+										class="form-radio-label"
+										for="bothradio"
+									>
+										Both
+									</label>
+								</div>
+
+								<div class="py-2">
+									<button
+										type="submit"
+										class="btn btn-primary"
+									>
+										Save changes
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-headingTwo">
+						<button
+							class="accordion-button lead collapsed"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#flush-collapseTwo"
+							aria-expanded="false"
+							aria-controls="flush-collapseTwo"
+						>
+							<div class="notification-header">
+								<h5 class="p-0 m-0">
+									<i class="bi bi-person pe-2"></i>Deactivate your account
+								</h5>
+							</div>
+						</button>
+					</h2>
+
+					<div
+						id="flush-collapseTwo"
+						class="accordion-collapse collapse px-5"
+						aria-labelledby="flush-headingTwo"
+						data-bs-parent="#settingsAccordion"
+					>
+						<div class="accordion-body">
+							<h6>Deactivate or delete your account.</h6>
+
+							<p class="text-success">
+								<i class="bi bi-info-circle pe-1"></i
+								>Deactivating your account will temporarily
+								remove your offers and profile from view on
+								the platform, but nothing will be deleted.
+								Your account will be reactivated when you
+								log in again.
+							</p>
+
+							<div class="py-2">
+								<a href="" class="btn btn-dark"
+									>Deactivate</a
+								>
+								<a href="" class="btn btn-outline-dark mx-2"
+									>Delete</a
+								>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="flush-heading3">
+						<button
+							class="accordion-button lead collapsed"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#flush-collapse3"
+							aria-expanded="false"
+							aria-controls="flush-collapse3"
+						>
+							<div class="notification-header">
+								<h5 class="p-0 m-0">
+									<i class="bi bi-lock pe-2"></i
+									>Change Password
+								</h5>
+							</div>
+						</button>
+					</h2>
+
+					<div
+						id="flush-collapse3"
+						class="accordion-collapse collapse px-5"
+						aria-labelledby="flush-heading3"
+						data-bs-parent="#settingsAccordion"
+					>
+						<div class="accordion-body">
+							<form method="post" action="{% url 'change-password' %}">
+								{% csrf_token %}
+								
+								<div class="form-floating mb-3">
+									<input
+										name="new_password1"
+										type="password"
+										class="form-control"
+										id="password1"
+										placeholder="New Password"
+									/>
+									<label for="password1">New Password</label>
+								</div>
+
+								<div class="form-floating mb-3">
+									<input
+										name="new_password2"
+										type="password"
+										class="form-control"
+										id="password2"
+										placeholder="Confirm New Password"
+									/>
+									<label for="password2">Confirm New Password</label>
+								</div>
+
+								<div class="py-2">
+									<button
+										type="submit"
+										class="btn btn-primary"
+									>
+										Change
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock content %} 
+
+{% block footer %}  
+{% endblock footer %}
+

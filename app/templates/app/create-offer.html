@@ -1,0 +1,218 @@
+{% extends 'app/base.html'%} {% load static %} {% block title %} New {% endblock title %} {% block content %}
+<main class="my-4 px-4">
+	<h1 class="text-center mb-3">{{ action }}.</h1>
+
+	<form method="post" enctype="multipart/form-data" class="container">
+		{% csrf_token %}
+
+		<div class="row">
+			<div class="col-lg-6">
+				<p class="text-success my-4">
+					<i class="bi bi-info-circle"></i>
+					Step 1. Enter the following details.
+				</p>
+
+				<div class="form-floating mb-3">
+					<input
+						name="vehicle_name"
+						type="text"
+						id="vehiclename"
+						class="form-control"
+						placeholder="Name of vehicle"
+						{% if offer %}
+						value="{{ offer.vehicle_name }}"
+						{% endif %}
+					/>
+					<label for="vehiclename">Name of vehicle</label>
+				</div>
+
+				<div class="form-floating mb-3">
+					<input
+						name="price"
+						type="number"
+						id="vehicleprice"
+						class="form-control"
+						placeholder="Price In USD"
+						{% if offer %}
+						value="{{ offer.price }}"
+						{% endif %}
+					/>
+					<label for="vehicleprice">Price In USD</label>
+				</div>
+
+				<div class="form-floating mb-3">
+					<input
+						name="mileage"
+						type="number"
+						id="vehiclemileage"
+						class="form-control"
+						placeholder="Mileage In Kilometres"
+						{% if offer %}
+						value="{{ offer.mileage }}"
+						{% endif %}
+					/>
+					<label for="vehiclemileage">Mileage In Kilometers</label>
+				</div>
+
+				<div class="form-floating mb-3">
+					<input
+						name="location"
+						type="text"
+						id="vehiclelocation"
+						class="form-control"
+						{% if offer %}
+						value="{{ offer.location }}"
+						{% else %}
+						value="{{ request.user.location }}"
+						{% endif %}
+						placeholder="Location"
+					/>
+					<label for="vehiclelocation">Location</label>
+				</div>
+
+				<div class="mb-3">
+					<label for="vehicle_type" class="form-label d-block p-2"
+						>Vehicle Type<i class="bi bi-info-circle mx-2"></i
+							>Please be accurate</label
+					>
+					<select
+						name="vehicle_type" 
+						class="form-select" 
+						aria-label="Default select example">
+						<option value="L" 
+						{% if not offer %}
+							selected
+						{% endif %}
+
+						{% if offer and offer.vehicle_type == 'L' %}
+							selected
+						{% endif %}>Light motor vehicle</option>
+						
+						<option value="H" 
+						{% if offer and offer.vehicle_type == 'H' %}
+							selected
+						{% endif %}>Heavy motor vehicle</option>
+
+						<option value="T" 
+						{% if offer and offer.vehicle_type == 'T' %}
+							selected
+						{% endif %}>Two wheeled vehicle</option>
+
+						<option value="O" 
+						{% if offer and offer.vehicle_type == 'O' %}
+							selected
+						{% endif %}>other</option>
+					</select>
+				</div>
+
+				<div class="mb-3">
+					<label for="descriptionText" class="form-label d-block p-2"
+						>Description</label
+					>
+					<textarea
+						class="form-control"
+						name="extra_details"
+						id="otherdetails"
+						rows="4"
+					>
+{% if offer and offer.extra_details %}{{ offer.extra_details }}{% else %}Vehicle details, condition, features and any other information.{% endif %}</textarea
+					>
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<p class="text-success my-4">
+					<i class="bi bi-info-circle"></i>
+					Step 2. Upload images. Image 1 will be displayed first.
+				</p>
+
+				<div class="container-fluid p-0">
+					<div
+						class="row justify-content-around images-container m-0 p-0"
+					>
+						<div
+							class="col-12 border h-120-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image1" class="d-none" />
+						</div>
+
+						<div
+							class="col-4 border h-80-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image2" class="d-none" />
+						</div>
+
+						<div
+							class="col-4 border h-80-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image3" class="d-none" />
+						</div>
+
+						<div
+							class="col-4 border h-80-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image4" class="d-none" />
+						</div>
+
+						<div
+							class="col-4 border h-80-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image5" class="d-none" />
+						</div>
+
+						<div
+							class="col-4 border h-80-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image6" class="d-none" />
+						</div>
+
+						<div
+							class="col-4 border h-80-px position-relative bg-dark mb-1"
+						>
+							<i
+								onclick="clickNext(this)"
+								class="bi bi-image position-absolute top-50 start-50 translate-middle fs-1 hover-white"
+							></i>
+							<input type="file" name="image7" class="d-none" />
+						</div>
+					</div>
+				</div>
+
+				<div>
+					<button class="btn me-2 my-3 btn-primary" type="submit">
+						Proceed
+					</button>
+
+					<button class="btn btn-danger" type="reset">Reset</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</main>
+{% endblock content %} {% block footer %} {% endblock footer %}
+
+

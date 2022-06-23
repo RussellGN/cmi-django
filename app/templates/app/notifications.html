@@ -1,0 +1,71 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Notifications {% endblock title %} 
+
+{% block modals %} 
+{% endblock modals %}
+
+{% block offcanvases %} 
+{% endblock offcanvases %}
+
+{% block content %}
+	<main class="my-5">
+		<h1 class="text-center py-2">
+			Notifications <i class="bi bi-bell"></i>
+		</h1>
+
+		{% if notifications %}
+		<div class="container p-2">
+			<div
+				class="accordion accordion-flush"
+				id="notficationAccordion"
+			>
+				{% for notification in notifications %}
+					<div class="accordion-item">
+						<h2 class="accordion-header" id="flush-heading{{ forloop.counter }}">
+							<button
+								class="accordion-button lead collapsed"
+								type="button"
+								data-bs-toggle="collapse"
+								data-bs-target="#flush-collapse{{ forloop.counter }}"
+								aria-expanded="false"
+								aria-controls="flush-collapse{{ forloop.counter }}"
+							>
+								<div class="notification-header">
+									<h5 class="p-0 m-0 d-flex align-items-center">
+										<span>
+											<i class="{{ notification.get_icon_display }} pe-1"></i>
+											{{ notification.title|capfirst }}
+										</span>
+										<span class=" ms-md-5 text-success">
+											<i class="bi bi-clock me-1"></i>{{ notification.date|date:'SHORT_DATE_FORMAT' }}
+										</span>
+									</h5>
+								</div>
+							</button>
+						</h2>
+
+						<div
+							id="flush-collapse{{ forloop.counter }}"
+							class="accordion-collapse collapse px-5"
+							aria-labelledby="flush-heading{{ forloop.counter }}"
+							data-bs-parent="#notficationAccordion"
+						>
+							<div class="accordion-body">
+								{{ notification.body|capfirst|safe }}
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% else %}
+			<h5 class=" p-4 text-center">
+				No recent notifications
+			</h5>
+		{% endif %}
+	</main>
+{% endblock content %} 
+
+{% block footer %}  
+{% endblock footer %}

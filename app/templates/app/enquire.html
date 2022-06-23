@@ -1,0 +1,102 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Enquire {% endblock title %} 
+
+{% block content %}
+	<main class="my-4">
+		<h1 class="text-center mb-3">Enquire.</h1>
+
+		<form method="post" class="container p-3">
+			{% csrf_token %}
+			<div class="row">
+				<div class="col-12">
+					<p class="text-center">
+						{{ offer.vehicle_name|capfirst|truncatechars:20 }} | 
+						USD {{ offer.price }} | 
+						{{ offer.location|capfirst }} |
+						{{ offer.owner.username }} | 
+						{{ offer.date|date:'SHORT_DATE_FORMAT' }}
+					</p>
+				</div>
+
+				<div class="col-md-6 order-md-2 py-4">
+					<h5 class="text-success text-center p-2">
+						Make a direct offer
+					</h5>
+
+					<input type="hidden" name="slug" value="{{ offer.slug }}">
+
+					<div class="form-floating mb-3">
+						<input
+							name="offerprice"
+							type="number"
+							id="offerprice"
+							class="form-control"
+							placeholder="Your offer In USD"
+						/>
+						<label for="offerprice">Your offer In USD</label>
+					</div>
+
+					<div class="mb-3">
+						<label
+							for="offerdetails"
+							class="form-label d-block p-2"
+							>Queries and other details. Your contact details
+							will be sent automatically</label
+						>
+						<textarea
+							class="form-control"
+							name="offerdetails"
+							id="offerdetails"
+							rows="4"
+						>
+type something...</textarea
+						>
+					</div>
+
+					<div class="text-center">
+						<button class="btn btn-success m-2" type="submit">
+							Send
+						</button>
+
+						<button class="btn btn-danger" type="reset">
+							Reset
+						</button>
+					</div>
+				</div>
+
+				<div class="col contact-details py-4">
+					<h5 class="text-success text-center p-2">
+						Contact {{ offer.owner.username }}
+					</h5>
+
+					<div class="my-3">
+						<i class="bi bi-telephone-fill bg-success"></i>
+						<h4>Call:</h4>
+						{% if offer.owner.username %}
+						<p>+263 719668444</p>
+						{% else %}
+						<p>Not Provided</p>
+						{% endif %}
+					</div>
+
+					<div class="my-3">
+						<i class="bi bi-envelope-fill bg-success"></i>
+						<h4>Email:</h4>
+						<p>{{ offer.owner.email }}</p>
+					</div>
+
+					<div class="my-3">
+						<i class="bi bi-geo-alt-fill bg-success"></i>
+						<h4>Location:</h4>
+						<p>{{ offer.owner.location|capfirst }}</p>
+					</div>
+				</div>
+			</div>
+		</form>
+	</main>
+{% endblock content %} 
+
+{% block footer %} 
+{% endblock footer %}
+

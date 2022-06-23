@@ -1,0 +1,148 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} {{user.username }} {% endblock title %} 
+
+{% block modals %} 
+	{{ block.super }} 
+{% endblock modals %} 
+
+{% block offcanvases %} 
+	{{ block.super }} 
+{% endblock offcanvases%} 
+
+{% block content %}
+	<main class="container-fluid my-4">
+		<div class="row justify-content-around position-relative">
+			<div
+				class="col-lg-4 col-xl-3 p-0 profile-sidebar sticky-lg-top shadow rounded"
+			>
+				<form action="{% url 'change-display-photo' %}" method="post" enctype="multipart/form-data"
+					class="profile-images d-flex justify-content-center align-items-center position-relative overflow-hidden"
+				>
+					{% csrf_token %}
+
+					{% if request.user == user %}
+					<a
+						class="btn btn-primary shadow-lg position-absolute end-0 bottom-0 m-2"
+						onclick="clickNext(this)"
+					>
+						<i class="bi bi-camera"></i>
+					</a>
+
+					<input
+						type="file"
+						name="display_photo"
+						onchange="clickNext(this)"
+						class="d-none"
+					/>
+
+					<button type="submit" class="d-none"></button>
+					{% endif %}
+
+					<h5
+						class="account-username shadow-lg position-absolute start-0 bottom-0 p-2 m-0"
+					>
+						{{ user.username }}
+					</h5>
+
+					<img
+						src="{{ user.display_photo.url }}"
+						alt="display photo"
+						class="w-100"
+					/>
+				</form>
+
+				<div class="account-details p-3">
+					{% if request.user == user %}
+					<div class="mb-3">
+						<a href="{% url 'update-profile' %}" class="btn btn-primary">
+							<i class="bi bi-pencil-square"></i
+						></a>
+
+						<a href="{% url 'user-settings' %}" class="btn btn-primary">
+							<i class="bi bi-gear"></i
+						></a>
+
+						<button
+							type="button"
+							class="btn btn-primary"
+							data-bs-toggle="modal"
+							data-bs-target="#logoutmodal"
+						>
+							<i class="bi bi-box-arrow-right"></i>
+						</button>
+					</div>
+					{% endif %}
+
+					<p><i class="bi bi-envelope-fill pe-2"></i>{{ user.email }}</p>
+
+					{% if user.account_type == 'DA' %}
+					<p><i class="bi bi-people-fill pe-2"></i>Dealership</p>
+					{% else %}
+					<p><i class="bi bi-person-fill pe-2"></i>Normal Account</p>
+					{% endif %}
+
+					<p>
+						<i class="bi bi-geo-alt-fill pe-2"></i>{{ user.location }}
+					</p>
+
+					{% if user.phone_number %}
+					<p>
+						<i class="bi bi-telephone-fill pe-2"></i>
+						{{ user.phone_number }}
+					</p>
+					{% endif %} 
+					{% if user.about %}
+					<p>{{ user.about }}</p>
+					{% endif %}
+				</div>
+			</div>
+
+			<div class="col-lg-8">
+				<h2 class="text-center mt-2">
+					Offers - {{ user.offer_set.count }}
+				</h2>
+
+				{% if user.offer_set.count != 0 %}
+					<div class="container-fluid">
+						{% for offer in user.offer_set.all %} 
+							{% include 'app/offer_single.html' %} 
+						{% endfor %}
+					</div>
+
+					<nav aria-label="Page navigation" class="my-5">
+						<ul class="pagination justify-content-center">
+							<li class="page-item disabled">
+								<a class="page-link">Previous</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">1</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">2</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">3</a>
+							</li>
+							<li class="page-item">
+								<a class="page-link" href="#">Next</a>
+							</li>
+						</ul>
+					</nav>
+				{% else %}
+					{% if user == request.user %}
+						<p class="display-5 py-5 my-5 text-center">
+							Start Uploading Offers <br>
+							<a href="{% url 'create-offer' %}" class="btn text-success"><i class="bi bi-plus-circle fs-1"></i></a>
+						</p>
+					{% endif %}
+				{% endif %}
+
+			</div>
+		</div>
+	</main>
+{% endblock content %} 
+
+{% block footer %} 
+	{{ block.super }} 
+{% endblock footer %}

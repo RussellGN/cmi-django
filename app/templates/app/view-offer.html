@@ -1,0 +1,227 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} View Offer {% endblock title %} 
+
+{% block modals %} 
+	{{ block.super }} 
+{% endblock modals %} 
+
+{% block offcanvases %} 
+	{{ block.super }} 
+{% endblock offcanvases%} 
+
+{% block content %}
+	<main class="container my-4 p-4">
+		<h2 class="text-center pt-4">{{ offer.vehicle_name|capfirst }}</h2>
+
+		<div class="row car-view-offer shadow mt-5">
+			<div
+				class="col-md-12 col-lg-7 position-relative border border-5 border-white p-0 overflow-hidden d-flex justify-content-center align-items-center"
+			>
+				<div
+					id="car-view-carousel"
+					class="carousel slide  h-100 d-flex align-items-center justify-content-center"
+					data-bs-ride="carousel"
+				>
+					<div class="carousel-indicators">
+						{% for image in images %}
+							<button
+								type="button"
+								data-bs-target="#car-view-carousel"
+								data-bs-slide-to="{{ forloop.counter|add:'-1' }}"
+								
+								{% if forloop.counter == 1 %}
+									class="active"
+									aria-current="true"
+								{% endif %}
+								
+								aria-label="Slide {{ forloop.counter }}"
+							></button>
+						{% endfor %}
+					</div>
+
+					<div class="carousel-inner h-100">
+						{% for image in images %}
+							<div class="carousel-item h-100   
+							{% if forloop.counter == 1 %} active {% endif %}">
+								<img
+									src="{{ image.url }}"
+									class="d-block w-100"
+									alt="{{ offer.vehicle_name }}"
+								/>
+							</div>
+						{% endfor %}
+					</div>
+
+					<button
+						class="carousel-control-prev"
+						type="button"
+						data-bs-target="#car-view-carousel"
+						data-bs-slide="prev"
+					>
+						<span
+							class="carousel-control-prev-icon"
+							aria-hidden="true"
+						></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+
+					<button
+						class="carousel-control-next"
+						type="button"
+						data-bs-target="#car-view-carousel"
+						data-bs-slide="next"
+					>
+						<span
+							class="carousel-control-next-icon"
+							aria-hidden="true"
+						></span>
+						<span class="visually-hidden">Next</span>
+					</button>
+				</div>
+
+				<a
+					class="btn btn-dark p-2 position-absolute top-0 start-0 text-decoration-none"
+				>
+					<i class="bi bi-images me-2"></i>{{ offer.image_count }}
+				</a>
+			</div>
+
+			<div class="col p-3">
+				<div
+					class="mb-3 d-flex align-items-center justify-content-between"
+				>
+					<a
+						class="normal-link text-decoration-none"
+						href="{{ offer.owner.get_absolute_url }}"
+					>
+						{{ offer.owner.username|capfirst }}
+					</a>
+
+					<small class="text-success">
+						{{ offer.date|date:"SHORT_DATE_FORMAT" }}<i class="bi bi-clock ms-2"></i>
+					</small>
+				</div>
+
+				<p><i class="me-2 bi bi-currency-dollar"></i>USD {{ offer.price }}</p>
+
+				<p><i class="me-2 bi bi-speedometer2"></i>{{ offer.mileage }} km</p>
+
+				<p><i class="me-2 bi bi-geo-alt"></i>{{ offer.location|capfirst }}</p>
+
+				{% if request.user == offer.owner %}
+				<p class="text-success">{{ offer.view_count }} Views</p>
+				{% endif %}
+
+				{% if offer.extra_details or offer.owner.about %}
+					<div
+						class="accordion accordion-flush car-description mb-3"
+						id="car-view-accordion"
+					>
+						{% if offer.extra_details %}
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="flush-headingOne">
+									<button
+										class="accordion-button px-0 collapsed"
+										type="button"
+										data-bs-toggle="collapse"
+										data-bs-target="#flush-collapseOne"
+										aria-expanded="false"
+										aria-controls="flush-collapseOne"
+									>
+										<i class="pe-1 bi bi-info-circle"></i>
+										Exra Details
+									</button>
+								</h2>
+
+								<div
+									id="flush-collapseOne"
+									class="accordion-collapse collapse"
+									aria-labelledby="flush-headingOne"
+									data-bs-parent="#car-view-accordion"
+								>
+									<div class="accordion-body">
+										{{ offer.extra_details }}
+									</div>
+								</div>
+							</div>
+						{% endif %}
+
+						{% if offer.owner.about %}
+							<div class="accordion-item">
+								<h2 class="accordion-header" id="flush-headingTwo">
+									<button
+										class="accordion-button px-0 collapsed"
+										type="button"
+										data-bs-toggle="collapse"
+										data-bs-target="#flush-collapseTwo"
+										aria-expanded="false"
+										aria-controls="flush-collapseTwo"
+									>
+										<i class="pe-1 bi bi-info-circle"></i>
+										About {{ offer.owner.username|capfirst }}
+									</button>
+								</h2>
+
+								<div
+									id="flush-collapseTwo"
+									class="accordion-collapse collapse"
+									aria-labelledby="flush-headingTwo"
+									data-bs-parent="#car-view-accordion"
+								>
+									<div class="accordion-body">
+										{{ offer.owner.about|capfirst }}									<a
+											href="{{ offer.owner.get_absolute_url }}"
+											class="normal-link text-decoration-none"
+											>Visit Profile</a
+										>.
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+				{% endif %}
+
+				<div>
+					{% if request.user != offer.owner %}
+						<a href="{{ offer.get_enquiry_url }}" class="btn btn-success me-2 mb-2 
+						"
+						>
+						Enquire<i class="bi bi-front ms-2"></i
+						></a>
+						<a
+							class="btn btn-primary me-2 mb-2"
+							data-bs-toggle="offcanvas"
+							href="#shortlistoffcanvas"
+							role="button"
+							aria-controls="shortlistoffcanvas"
+						>
+							Shortlist<i class="bi bi-card-list ms-2"></i>
+						</a>
+					{% else %}
+						<a href="{{ offer.get_edit_url }}" class="btn btn-primary me-2 mb-2"
+							><i class="bi bi-pencil-square"></i
+						></a>
+
+						<button
+							type="button"
+							id="porsche"
+							onclick="passNameAndURL('{{ offer.vehicle_name }}', '{{ offer.get_delete_url }}')"
+							class="btn btn-primary me-2 mb-2"
+							data-bs-toggle="modal"
+							data-bs-target="#removemodal"
+						>
+							<i class="bi bi-trash-fill"></i>
+						</button>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock content %} 
+
+{% block footer %} 
+	{{ block.super }} 
+{% endblock footer %}
+
+

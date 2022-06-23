@@ -1,0 +1,193 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Signup {% endblock title %} 
+
+{% block content %}
+	<main class="p-5">
+		<h1 class="display-1 text-center">
+			<i class="bi bi-person-circle"></i>
+		</h1>
+
+		<h1 class="text-center mb-5">{{ action }}</h1>
+
+		<form action="{% url 'user-signup' %}" method="post" class="container">
+			{% csrf_token %}
+
+			<div class="row">
+				<div class="col-md-6">
+					{% if request.user.is_authenticated %} 
+						<p class="text-success p-3">
+							<i class="bi bi-info-circle"></i>
+							If you wish to update your password, do it in the settings menu. 
+							<br><a href="{% url 'user-settings' %}#flush-heading3">Change password.</a>
+						</p>
+					{% endif %}
+					<div class="form-floating mb-3">
+						<input
+							name="username"
+							type="text"
+							maxlength="20"
+							id="username"
+							class="form-control"
+							placeholder="Username"
+							{% if request.user.is_authenticated %} value="{{ request.user.username }}" {% endif %}
+						/>
+						<label for="username">Username</label>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input
+							name="email"
+							type="email"
+							maxlength="50"
+							id="email"
+							class="form-control"
+							placeholder="Email Address"
+							{% if request.user.is_authenticated %} value="{{ request.user.email }}" {% endif %}
+							/>
+						<label for="floatingInput">Email address</label>
+					</div>
+
+					{% if not request.user.is_authenticated %} 
+					<div class="form-floating mb-3">
+						<input
+							name="password1"
+							type="password"
+							class="form-control"
+							id="password1"
+							placeholder="Password"
+							{% if request.user.is_authenticated %} value="{{ request.user.password1 }}" {% endif %}
+						/>
+						<label for="password1">Password</label>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input
+							name="password2"
+							type="password"
+							class="form-control"
+							id="password2"
+							placeholder="Confirm Password"
+						/>
+						<label for="password2">Confirm Password</label>
+					</div>
+					{% endif %}
+
+					<div class="form-floating mb-3">
+						<input
+							name="location"
+							type="text"
+							maxlength="30"
+							class="form-control"
+							id="location"
+							placeholder="Your Location"
+							{% if request.user.is_authenticated %} value="{{ request.user.location }}" {% endif %}
+						/>
+						<label for="location">Your Location</label>
+					</div>
+				</div>
+
+				<div class="col-md-6">
+					<div class="mb-3 px-2">
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								
+								{% if request.user.is_authenticated %}
+									{% if request.user.account_type == 'NU' %}
+										checked
+									{% endif %}
+								{% else %}
+									checked
+								{% endif %}
+								
+								name="account_type"
+								value="NU"
+								id="normaluser"
+							/>
+							<label
+								class="form-check-label"
+								for="normaluser"
+							>
+								Normal User
+							</label>
+						</div>
+
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+
+								{% if request.user.is_authenticated %}
+									{% if request.user.account_type == 'DA' %}
+										checked
+									{% endif %}
+								{% endif %}
+
+								name="account_type"
+								value="DA"
+								id="dealershipaccount"
+							/>
+							<label
+								class="form-check-label"
+								for="dealershipaccount"
+							>
+								Dealership Account
+							</label>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<label for="about" class="form-label d-block p-2"
+							>About</label
+						>
+						<textarea
+							class="form-control"
+							name="about"
+							maxlength="500"
+							id="about"
+							rows="4"
+						>{% if request.user.is_authenticated and request.user.about %}{{ request.user.about }}{% else %}A short description of yourself/your dealership{% endif %}</textarea>
+					</div>
+
+					<div class="form-floating mb-3">
+						<input
+							name="phone_number"
+							type="number"
+							minlength="9"
+							id="phone"
+							class="form-control"
+							placeholder="Phone number (optional)"
+							{% if request.user.is_authenticated and request.user.phone_number %} 
+								value="{{ request.user.phone_number }}" 
+							{% endif %}
+						/>
+						<label for="phone">Phone number (optional)</label>
+					</div>
+
+					<div>
+						<button class="btn m-2 btn-primary" type="submit">
+							Proceed
+						</button>
+
+						<button class="btn btn-danger" type="reset">
+							Reset
+						</button>
+					</div>
+
+					<p class="m-2">
+						Already have an account?
+						<a class="normal-link" href="{% url 'user-login' %}">Login</a>
+					</p>
+				</div>
+			</div>
+		</form>
+	</main>
+{% endblock content %} 
+
+{% block footer %} 
+{% endblock footer %}
+
+
+

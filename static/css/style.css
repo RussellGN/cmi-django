@@ -1,0 +1,352 @@
+/* bootstrap overides________________________________*/
+
+@media screen {
+	.border-primary {
+		border-color: rebeccapurple !important;
+	}
+	.text-primary {
+		color: rebeccapurple !important;
+		border-color: rebeccapurple !important;
+	}
+	.bg-primary {
+		background-color: rebeccapurple !important;
+		color: white !important;
+		border-color: rebeccapurple !important;
+	}
+	.bg-dark {
+		background-color: rgb(44, 45, 50) !important;
+	}
+	.btn-primary {
+		background-color: rebeccapurple !important;
+		border-color: rebeccapurple !important;
+	}
+	.btn-primary:hover,
+	.btn-primary:focus {
+		color: white !important;
+		background-color: rgb(59, 30, 87) !important;
+		border-color: rgb(59, 30, 87) !important;
+	}
+	.btn-success:hover,
+	.btn-success:focus,
+	.btn-danger:hover,
+	.btn-danger:focus {
+		color: white !important;
+	}
+	.btn-outline-primary {
+		color: rebeccapurple !important;
+		border-color: rebeccapurple !important;
+	}
+	.btn-outline-light {
+		color: whitesmoke !important;
+		border-color: whitesmoke !important;
+	}
+	.btn-outline-primary:hover,
+	.btn-outline-primary:focus {
+		color: white !important;
+		background-color: rebeccapurple !important;
+	}
+	.btn-outline-success:hover,
+	.btn-outline-success:focus {
+		color: white !important;
+	}
+
+	.btn-outline-light:hover,
+	.btn-outline-light:focus {
+		color: rebeccapurple !important;
+	}
+	.btn-check:focus + .btn-outline-primary,
+	.btn-outline-primary:focus,
+	.btn-primary:hover,
+	.btn-primary:focus {
+		box-shadow: none !important;
+	}
+	.navbar-brand:hover,
+	.navbar-brand:hover {
+		color: white !important;
+	}
+	.nav-link {
+		transition: all 0.3s;
+		color: whitesmoke !important;
+	}
+	.nav-link:hover,
+	.nav-link:focus {
+		color: gray !important;
+	}
+	header .nav-link:hover {
+		color: gray !important;
+	}
+	header .nav-link.active {
+		color: whitesmoke !important;
+		border-bottom: solid thin;
+	}
+	.nav {
+		color: white;
+	}
+	.nav:focus,
+	.nav:hover,
+	.active {
+		color: gray;
+	}
+	a:hover,
+	a:focus,
+	.active {
+		color: gray !important;
+	}
+	.form-select:focus {
+		border-color: gray !important;
+		box-shadow: none !important;
+	}
+	select {
+		color: inherit !important;
+	}
+	select:focus {
+		border-color: transparent !important;
+	}
+	.accordion-item {
+		background-color: inherit !important;
+		color: inherit !important;
+	}
+	.accordion-button {
+		color: inherit !important;
+		background-color: inherit !important;
+	}
+	.accordion-button:focus {
+		box-shadow: none !important;
+	}
+	.accordion-button::after {
+		transform: scale(0.7);
+		filter: grayscale();
+	}
+}
+
+/* custom classes________________________________ */
+
+@media screen {
+	.normal-link:hover,
+	.normal-link:focus {
+		color: rebeccapurple !important;
+	}
+	.border-gray {
+		border-color: gray !important;
+	}
+	.bg-whitesmoke {
+		background-color: whitesmoke !important;
+	}
+}
+
+/* global styles________________________________*/
+
+@media screen {
+	body {
+		color: gray;
+		background-color: whitesmoke;
+		padding-top: 65px;
+	}
+	@media screen and (max-width: 500px) {
+		body {
+			padding-top: 60px;
+		}
+	}
+	.new-offer-plus:hover,
+	.new-offer-plus:focus,
+	.new-offer-plus:active {
+		color: gray !important;
+		background-color: transparent !important;
+	}
+	footer .social-link {
+		font-size: 120%;
+		transition: all 0.3s;
+		color: inherit !important;
+	}
+	footer .social-link:hover {
+		color: white !important;
+	}
+}
+
+/* home styles________________________________trsah cards maybe*/
+
+@media screen {
+	#heroCarousel {
+		height: 80vh;
+	}
+	#heroCarousel .image-holder img {
+		height: auto;
+		width: 100%;
+	}
+	@media screen and (max-width: 795px) {
+		#heroCarousel {
+			height: 100vh;
+		}
+		#heroCarousel .image-holder img {
+			height: 100%;
+			width: auto;
+		}
+	}
+	#heroCarousel .image-holder::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.carousel-caption {
+		width: fit-content !important;
+		color: whitesmoke !important;
+		height: fit-content;
+	}
+	.carousel-caption h1 {
+		max-width: 700px;
+	}
+	.carousel-caption p {
+		max-width: 350px;
+	}
+
+	.card-image-holder {
+		width: 100%;
+		height: 200px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: black;
+		overflow: hidden;
+	}
+	.card-image-holder img {
+		width: 100%;
+	}
+	@media screen and (max-width: 990px) {
+		.card-image-holder {
+			height: 300px;
+		}
+		.card-image-holder img {
+			height: 100%;
+			width: auto;
+		}
+	}
+	.create-account i.bi-person-check {
+		font-size: 1200%;
+	}
+	.bg1 {
+	color: white;
+	background: linear-gradient(rgba(51, 5, 104, 0.7), rgba(0, 0, 0, 0.2)),
+		url("/static/img/image1.jpg") top center no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+}
+
+/* offers styles________________________________*/
+
+@media screen {
+	.offers-sidebar {
+		overflow-y: scroll;
+		height: 80vh;
+		top: 110px;
+	}
+	#mobile-filters-button {
+		z-index: 5;
+	}
+	.tabs .nav-link {
+		border: solid medium transparent !important;
+		color: gray !important;
+		cursor: pointer;
+	}
+	.tabs .nav-link:hover {
+		color: rebeccapurple !important;
+	}
+	.tabs .nav-link.active {
+		background: rebeccapurple !important;
+		color: #fff !important;
+		border-color: rebeccapurple !important;
+	}
+	.offer > div:first-child {
+		max-height: 350px;
+	}
+}
+
+/* account styles________________________________*/
+
+@media screen {
+	.account-username{
+		background-color: rgba(0, 0, 0, 0.5);
+	}
+	.profile-sidebar {
+		height: 80vh;
+		top: 110px;
+	}
+	.profile-images {
+		height: 150px;
+	}
+	.account-username {
+		max-width: 250px;
+		word-break: break-all;
+		color: whitesmoke;
+	}
+	@media screen and (max-width: 992px) {
+		.profile-sidebar {
+			height: fit-content;
+			width: 80%;
+			margin-bottom: 20px;
+		}
+		.profile-images {
+			height: 200px;
+		}
+	}
+}
+
+/* contact styles________________________________*/
+
+@media screen {
+	.contact-details i {
+		font-size: 20px;
+		color: #fff;
+		float: left;
+		width: 44px;
+		height: 44px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border-radius: 50px;
+		transition: all 0.3s ease-in-out;
+	}
+	.contact-details h4 {
+		padding: 0 0 0 60px;
+		margin-bottom: 5px;
+	}
+	.contact-details p {
+		padding: 0 0 0 60px;
+		margin-bottom: 0;
+	}
+}
+
+/* new offer styles________________________________*/
+
+@media screen {
+	.hover-white:hover {
+		color: white;
+	}
+	.h-80-px {
+		height: 80px;
+	}
+	.h-120-px {
+		height: 120px;
+	}
+}
+
+/* login and signup styles */
+
+@media screen {
+	.signin-form {
+		max-width: 350px;
+	}
+}
+
+/* car-view styles________________________________*/
+
+@media screen {
+	.car-view-offer > div:first-child {
+		max-height: 400px;
+	}
+}

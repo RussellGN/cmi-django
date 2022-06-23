@@ -1,0 +1,303 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Home {%endblock title %} 
+
+{% block content %}
+
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+	<div class="carousel-indicators">
+		<button
+			type="button"
+			data-bs-target="#heroCarousel"
+			data-bs-slide-to="0"
+			class="active"
+			aria-current="true"
+			aria-label="Slide 1"
+		></button>
+
+		<button
+			type="button"
+			data-bs-target="#heroCarousel"
+			data-bs-slide-to="1"
+			aria-label="Slide 2"
+		></button>
+
+		<button
+			type="button"
+			data-bs-target="#heroCarousel"
+			data-bs-slide-to="2"
+			aria-label="Slide 3"
+		></button>
+	</div>
+
+	<div class="carousel-inner h-100">
+		<div class="carousel-item h-100 active">
+			<div
+				class="image-holder overflow-hidden h-100 w-100 position-relative d-flex justify-content-center align-items-center"
+			>
+				<img src="{% static 'img/image1.jpg' %}" class="d-block" />
+			</div>
+
+			<div class="carousel-caption top-50 start-50 translate-middle px-5">
+				<h1 class="mb-4 mx-auto">
+					THE BEST SECOND HAND CAR DEALS NATION-WIDE.
+				</h1>
+
+				<p class="mb-4 d-block mx-auto">
+					In search of a new car? Find the perfect car/vehicle for
+					your budget and needs here on cars.zim.
+				</p>
+
+				<div>
+					<form action="{% url 'offers' %}" class="my-2 d-md-inline-block">
+						<input
+							type="search"
+							placeholder="Search..."
+							name="q"
+							class="p-1 px-2"
+						/>
+					</form>
+
+					<span class="m-2 d-block d-md-inline-block">- OR -</span>
+
+					<a href="{% url 'offers' %}" class="my-2 btn btn-primary"
+						>Browse Offers</a
+					>
+				</div>
+			</div>
+		</div>
+
+		<div class="carousel-item h-100">
+			<div
+				class="image-holder overflow-hidden h-100 w-100 position-relative d-flex justify-content-center align-items-center"
+			>
+				<img
+					src="{% static 'img/hillux2.jpg' %}"
+					class="d-block"
+				/>
+			</div>
+
+			<div class="carousel-caption top-50 start-50 translate-middle px-5">
+				<h1 class="mb-4 mx-auto">Looking to sell?</h1>
+
+				<p class="mb-4 d-block mx-auto">
+					Advertise your car for sale at no cost whatsoever! Whether
+					you are a dealership business, agent or just a regular
+					person, our platform is completely free!
+				</p>
+
+				<div>
+					<a
+						href="{% url 'create-offer' %}"
+						class="m-2 btn btn-primary"
+						>Advertise Your Car
+						<i class="bi bi-arrow-right-short"></i
+					></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="carousel-item h-100">
+			<div
+				class="image-holder overflow-hidden h-100 w-100 position-relative d-flex justify-content-center align-items-center"
+			>
+				<img src="{% static 'img/image1.jpg' %}" class="d-block" />
+			</div>
+
+			<div class="carousel-caption top-50 start-50 translate-middle px-5">
+				<h1 class="mb-4 mx-auto">
+					Vehicles for every need, from personal vehicles to utility
+					vehicles
+				</h1>
+
+				<p class="mb-4 d-block mx-auto">
+					Cars, motorcylcles, lorries, freight-trucks. We've got them
+					all.
+				</p>
+
+				<div>
+					<a href="{% url 'offers' %}" class="m-2 btn btn-primary"
+						>Browse Offers <i class="bi bi-arrow-right-short"></i
+					></a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<button
+		class="carousel-control-prev"
+		type="button"
+		data-bs-target="#heroCarousel"
+		data-bs-slide="prev"
+	>
+		<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Previous</span>
+	</button>
+
+	<button
+		class="carousel-control-next"
+		type="button"
+		data-bs-target="#heroCarousel"
+		data-bs-slide="next"
+	>
+		<span class="carousel-control-next-icon" aria-hidden="true"></span>
+		<span class="visually-hidden">Next</span>
+	</button>
+</div>
+
+{% comment "expandable"%}
+<div class="picks container-xxl px-4 my-5">
+	<h2 class="text-center p-4">Today's Picks</h2>
+
+	<div class="row justify-content-center">
+		<div class="col-lg-3 m-3">
+			<div class="card">
+				<div class="card-image-holder">
+					<img src="{% static 'img/range-rover.JPEG' %}" />
+				</div>
+
+				<div class="card-body">
+					<h5 class="card-title">Porsche 911 Carrera 4S</h5>
+
+					<p class="card-text">
+						<i class="bi bi-currency-dollar"></i> USD 45 000
+						<br />
+						<i class="bi bi-geo-alt-fill"></i> Harare <br />
+						<i class="bi bi-check-circle"></i> Paperwork
+					</p>
+
+					<a href="#" class="btn btn-primary w-100">View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-3 m-3">
+			<div class="card main-pick">
+				<div class="card-image-holder">
+					<img src="{% static 'img/porsche.JPG' %}" />
+				</div>
+
+				<div class="card-body">
+					<h5 class="card-title">Porsche 911 Carrera 4S</h5>
+					<p class="card-text">
+						<i class="bi bi-currency-dollar"></i> USD 45 000
+						<br />
+						<i class="bi bi-geo-alt-fill"></i> Harare <br />
+						<i class="bi bi-check-circle"></i> Paperwork
+					</p>
+					<a href="#" class="btn btn-primary w-100">View</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-3 m-3">
+			<div class="card">
+				<div class="card-image-holder">
+					<img src="{% static 'img/range-rover.JPEG' %}" />
+				</div>
+
+				<div class="card-body">
+					<h5 class="card-title">Porsche 911 Carrera 4S</h5>
+					<p class="card-text">
+						<i class="bi bi-currency-dollar"></i> USD 45 000
+						<br />
+						<i class="bi bi-geo-alt-fill"></i> Harare <br />
+						<i class="bi bi-check-circle"></i> Paperwork
+					</p>
+					<a href="#" class="btn btn-primary w-100">View</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="text-center my-2">
+		<a href="{% url 'offers' %}" class="btn btn-lg btn-primary"
+			>More From Today <i class="bi bi-arrow-right-short"></i
+		></a>
+	</div>
+</div>
+{% endcomment %}
+<div class="container px-4 my-5">
+	<div class="g-2 row">
+		<div
+			class="col-lg-6 d-flex align-items-center justify-content-center background-img-container"
+		>
+			<img src="{% static 'img/image2.png' %}" class="img-fluid" />
+		</div>
+
+		<div class="col-lg-6">
+			<div
+				class="content lead d-flex flex-column justify-content-center h-100"
+			>
+				<h3 class="display-5">Endless variety</h3>
+
+				<p>
+					Browse a variety of vehicles. Whether you're looking for
+					construction vehicles, motorcycles for your delivery
+					business or a bigger car for your family. Cars.zim has got
+					something for every need and everybody.
+					<br />
+					<a href="{% url 'offers' %}" class="btn btn-primary btn-lg my-2"
+						>Browse Offers<i
+							class="bi bi-arrow-right-short px-1"
+						></i
+					></a>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="create-account container px-4 my-5">
+	<div class="row flex-lg-row-reverse align-items-center g-2">
+		<div class="col-lg-6 text-success text-center">
+			<i class="bi bi-person-check"></i>
+		</div>
+
+		<div class="col-lg-6">
+			<h2 class="display-5 mb-3">
+				Why you should create your
+				<span class="text-success">FREE</span> account today.
+			</h2>
+
+			<p class="lead">
+				In order to post offers, you need an account. Creating an
+				account and posting offers is 100% free. Our platform is here to
+				allow people and dealerships to advertise their vehicles to a
+				wider audience.
+			</p>
+
+			<p class="text-success">
+				<i class="bi bi-info-circle"></i> You don't require an account
+				to view offers and enquire for them.
+			</p>
+
+			<div class="d-grid gap-2 d-md-flex justify-content-md-start">
+				<a href="{% url 'user-signup' %}"
+					type="button"
+					class="btn btn-primary btn-lg px-4 me-md-2"
+				>
+					Signup
+				</a>
+				<a href="{% url 'offers' %}"
+					type="button"
+					class="btn btn-outline-success btn-lg px-4"
+				>
+					Browse Offers
+					<i class="bi bi-arrow-right-short"></i>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="p-5 text-center bg1">
+	<h2>
+		You Wont find anything else down here. Start browsing vehicles
+		now.
+	</h2>
+	<a href="{% url 'offers' %}" class="btn btn-primary btn-lg my-3">Browse Offers</a>
+</div>
+
+
+{% endblock content %} {% block footer %}{{ block.super }}{% endblock footer %}

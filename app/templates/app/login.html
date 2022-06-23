@@ -1,0 +1,73 @@
+{% extends 'app/base.html'%} 
+{% load static %} 
+{% block title %} Login {% endblock title %} 
+
+{% block modals %} 
+	{{ block.super }} 
+{% endblock modals %}
+
+{% block content %}
+	<main class="p-5">
+		<h1 class="display-1 text-center">
+			<i class="bi bi-person-circle"></i>
+		</h1>
+
+		<h1 class="text-center mb-3">Login</h1>
+
+		<form method="post" class="mx-auto signin-form">
+			{% csrf_token %}
+
+			<div class="form-floating mb-3">
+				<input
+					name="username"
+					type="text"
+					maxlength="20"
+					class="form-control"
+					id="floatingInput"
+					placeholder="Username"
+				/>
+				<label for="floatingInput">Username</label>
+			</div>
+
+			<div class="form-floating mb-3">
+				<input
+					name="password"
+					type="password"
+					class="form-control"
+					id="floatingPassword"
+					placeholder="Password"
+				/>
+				<label for="floatingPassword">Password</label>
+			</div>
+
+			<div class="d-flex justify-content-between">
+				<div>
+					<p class="mb-3">
+						Don't have an account? <br />
+						<a class="normal-link" href="{% url 'user-signup' %}">Signup</a>
+					</p>
+
+					<a class="d-block normal-link" onclick="clickNext(this)"
+						>Forgot Password</a
+					>
+
+					<button
+						type="button"
+						class="d-none"
+						data-bs-toggle="modal"
+						data-bs-target="#forgotpasswordmodal"
+					></button>
+				</div>
+
+				<div>
+					<button class="btn btn-primary" type="submit">
+						Login
+					</button>
+				</div>
+			</div>
+		</form>
+	</main>
+{% endblock content %} 
+
+{% block footer %}  
+{% endblock footer %}
