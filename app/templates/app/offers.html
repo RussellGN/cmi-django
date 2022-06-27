@@ -342,9 +342,6 @@
 							aria-label="Text input with dropdown button"
 						/>
 
-						<input type="hidden" name="vt" id="vt" 
-						value="{% if vehicle_type %}{{ vehicle_type }}{% endif %}">
-
 						<div class="d-flex bg-primary">
 						  <label for="sort_by" class="form-label text-white py-1 px-2">Sort By</label>
 						  <select class="form-control text-dark" name="sort_by">
@@ -355,51 +352,6 @@
 						  </select>
 						</div>
 
-
-						{% comment %}
-						<button
-							class="btn btn-primary dropdown-toggle"
-							type="button"
-							data-bs-toggle="dropdown"
-							aria-expanded="false"
-						>
-							Sort By
-						</button>
-						{% endcomment %}
-
-						<ul class="dropdown-menu dropdown-menu-end">
-							<li>
-								<a
-									class="dropdown-item"
-									href="{% url 'offers' %}/date-d"
-									>Latest</a
-								>
-							</li>
-
-							<li>
-								<a
-									class="dropdown-item"
-									href="{% url 'offers' %}/date-a"
-									>Oldest</a
-								>
-							</li>
-
-							<li>
-								<a
-									class="dropdown-item"
-									href="{% url 'offers' %}/price-a"
-									>Price <i class="bi bi-arrow-up"></i
-								></a>
-							</li>
-
-							<li>
-								<a
-									class="dropdown-item"
-									href="{% url 'offers' %}/price-d"
-									>Price <i class="bi bi-arrow-down"></i
-								></a>
-							</li>
-						</ul>
 					</form>
 				</div>
 
@@ -409,7 +361,7 @@
 							class="nav nav-tabs row justify-content-center p-0"
 						>
 							<a	
-								onclick="getType('L')"
+								href="?vt=L"
 								class="col-2 nav-link mx-1 px-0 text-center
 								{% if not vehicle_type or vehicle_type == 'L'%}
 									active show
@@ -424,7 +376,7 @@
 							</a>
 
 							<a
-								onclick="getType('H')"
+								href="?vt=H"
 								class="col-2 nav-link mx-1 px-0 text-center
 								{% if vehicle_type == 'H'%}
 									active show
@@ -435,7 +387,7 @@
 							</a>
 
 							<a
-								onclick="getType('T')"
+								href="?vt=T"
 								class="col-2 nav-link mx-1 px-0 text-center
 								{% if vehicle_type == 'T'%}
 									active show
@@ -446,7 +398,7 @@
 							</a>
 
 							<a
-								onclick="getType('O')"
+								href="?vt=O"
 								class="col-2 nav-link mx-1 px-0 text-center
 								{% if vehicle_type == 'O'%}
 									active show
@@ -498,13 +450,6 @@
 		</div>
 	</main>
 
-	<script>
-		function getType(typ){
-			vt = document.getElementById('vt')
-			vt.value = typ
-			vt.parentElement.submit()
-		}
-	</script>
 {% endblock content %} 
 
 {% block footer %} 

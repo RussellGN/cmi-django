@@ -1,3 +1,4 @@
+import re
 from django.http import HttpResponse
 from datetime import datetime, date
 from django.shortcuts import redirect, render
@@ -21,8 +22,9 @@ def home(request):
     return render(request, 'app/index.html', context)
 
 def offers(request): 
+
     #check for vehicle type filter
-    vehicle_type = request.GET.get('vt') 
+    vehicle_type = request.GET.get('vt')
     if vehicle_type:
         offers = Offer.objects.filter(vehicle_type=vehicle_type)
     else:

@@ -14,7 +14,7 @@ class Offer(models.Model):
         ('T', 'Two wheeled vehicle'),
         ('O', 'Other'),
     )
-    vehicle_type = models.CharField(max_length=3, default='L', choices=vehicle_type_choices)
+    vehicle_type = models.CharField(max_length=1, default='L', choices=vehicle_type_choices)
     
     date = models.DateTimeField(auto_now=True )
     extra_details = models.TextField(max_length=500, null=True, blank=True)

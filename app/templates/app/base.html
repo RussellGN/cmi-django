@@ -26,136 +26,140 @@
 		<link rel="stylesheet" href="{% static 'css/style.css' %}" />
 	</head>
 
-	<body class="container-xxl px-0">
-		<header id="header" class="container-xxl p-0 fixed-top bg-dark shadow-lg">
-			<nav class="navbar navbar-expand-lg navbar-dark p-1">
-				<div class="container-fluid">
-					<a class="navbar-brand fs-2 mb-2" href="{% url 'home' %}"
-						>cars<span class="text-primary">.zim</span></a
-					>
+	<body class="px-0">
+		<header id="header" class="p-0 fixed-top bg-dark shadow-lg">
+			<div class="container-xxl">
+				<nav class="navbar navbar-expand-lg navbar-dark p-1">
+					<div class="container-fluid">
+						<a class="navbar-brand fs-2 mb-2" href="{% url 'home' %}"
+							>cars<span class="text-primary">.zim</span></a
+						>
 
-					<button
-						class="navbar-toggler"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation"
-					>
-						<span class="navbar-toggler-icon"></span>
-					</button>
+						<button
+							class="navbar-toggler"
+							type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#navbarSupportedContent"
+							aria-controls="navbarSupportedContent"
+							aria-expanded="false"
+							aria-label="Toggle navigation"
+						>
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
-					<div
-						class="collapse navbar-collapse"
-						id="navbarSupportedContent"
-					>
-						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-							<li class="nav-item">
-								<a class="nav-link active" href="{% url 'home' %}"
-									>Home</a
-								>
-							</li>
-
-							<li class="nav-item">
-								<a class="nav-link" href="{% url 'offers' %}"
-									>Offers</a
-								>
-							</li>
-  
-							{% if request.user.is_authenticated %}
+						<div
+							class="collapse navbar-collapse"
+							id="navbarSupportedContent"
+						>
+							<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 								<li class="nav-item">
-									<a class="nav-link" href="{{ request.user.get_absolute_url }}"
-										>Account</a
+									<a class="nav-link active" href="{% url 'home' %}"
+										>Home</a
 									>
 								</li>
 
-								<li class="nav-item d-lg-none">
-									<a class="nav-link" href="{% url 'create-offer' %}"
-										>New Offer</a
+								<li class="nav-item">
+									<a class="nav-link" href="{% url 'offers' %}"
+										>Offers</a
 									>
 								</li>
-							{% else %}
-								<li class="nav-item d-lg-none">
-									<a class="nav-link" href="{% url 'user-login' %}">Login</a>
-								</li>
-
-								<li class="nav-item d-lg-none">
-									<a class="nav-link" href="{% url 'user-signup' %}"
-										>Signup</a
-									>
-								</li>
-							{% endif %}
-
-						</ul>
-
-						<div class="d-none d-lg-flex">
-							{% if request.user.is_authenticated %}
-								<a
-									href="{% url 'create-offer' %}"
-									class="new-offer-plus text-white me-2 px-2 fs-4"
-								>
-									<i class="bi bi-plus-circle"></i>
-								</a>
-
-								<a
-									href="{% url 'notifications' %}"
-									class="btn btn-primary position-relative me-2 px-2"
-								>
-									<i class="bi bi-bell"></i>
-									{% if new_notifications %}
-										<span
-											class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
+	
+								{% if request.user.is_authenticated %}
+									<li class="nav-item">
+										<a class="nav-link" href="{{ request.user.get_absolute_url }}"
+											>Account</a
 										>
-											{{ new_notifications.count }}
-											<span class="visually-hidden"
-												>unread messages</span
+									</li>
+
+									<li class="nav-item d-lg-none">
+										<a class="nav-link" href="{% url 'create-offer' %}"
+											>New Offer</a
+										>
+									</li>
+								{% else %}
+									<li class="nav-item d-lg-none">
+										<a class="nav-link" href="{% url 'user-login' %}">Login</a>
+									</li>
+
+									<li class="nav-item d-lg-none">
+										<a class="nav-link" href="{% url 'user-signup' %}"
+											>Signup</a
+										>
+									</li>
+								{% endif %}
+
+							</ul>
+
+							<div class="d-none d-lg-flex">
+								{% if request.user.is_authenticated %}
+									<a
+										href="{% url 'create-offer' %}"
+										class="new-offer-plus text-white me-2 px-2 fs-4"
+									>
+										<i class="bi bi-plus-circle"></i>
+									</a>
+
+									<a
+										href="{% url 'notifications' %}"
+										class="btn btn-primary position-relative me-2 px-2"
+									>
+										<i class="bi bi-bell"></i>
+										{% if new_notifications %}
+											<span
+												class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success"
 											>
-										</span>
-									{% endif %}
-								</a>
-							{% else %}
-								<a
-									class="btn btn-outline-light me-2 d-flex align-items-center"
-									href="{% url 'user-login' %}"
-								>
-									Login
-								</a>
+												{{ new_notifications.count }}
+												<span class="visually-hidden"
+													>unread messages</span
+												>
+											</span>
+										{% endif %}
+									</a>
+								{% else %}
+									<a
+										class="btn btn-outline-light me-2 d-flex align-items-center"
+										href="{% url 'user-login' %}"
+									>
+										Login
+									</a>
 
-								<a
-									class="btn btn-primary me-2 d-flex align-items-center"
-									href="{% url 'user-signup' %}"
-								>
-									Signup
-								</a>
-							{% endif %}
+									<a
+										class="btn btn-primary me-2 d-flex align-items-center"
+										href="{% url 'user-signup' %}"
+									>
+										Signup
+									</a>
+								{% endif %}
 
-							<form action="{% url 'offers' %}" class="d-flex">
-								<input
-									name="q"
-									class="form-control"
-									type="search"
-									placeholder="Search"
-									aria-label="Search"
-								/>
-							</form>
+								<form action="{% url 'offers' %}" class="d-flex">
+									<input
+										name="q"
+										class="form-control"
+										type="search"
+										placeholder="Search"
+										aria-label="Search"
+									/>
+								</form>
+							</div>
 						</div>
 					</div>
-				</div>
-			</nav>
+				</nav>
+			</div>
 
 			{% if messages %} {% for message in messages %}
 				<div
-					class="my-0 alert alert-{{ message.tags }} alert-dismissible fade show"
+					class="my-0 alert p-1 alert-{{ message.tags }} alert-dismissible fade show"
 					role="alert"
 				>
-					{{ message }}
-					<button
-						type="button"
-						class="btn-close"
-						data-bs-dismiss="alert"
-						aria-label="Close"
-					></button>
+					<div class="container-xxl position-relative d-flex align-items-center">
+						<div class="flex-fill">{{ message }}</div>
+						<button
+							type="button"
+							class="btn-close bg-dark position-static"
+							data-bs-dismiss="alert"
+							aria-label="Close"
+						></button>
+					</div>
 				</div>
 			{% endfor %} {% endif %}
 		</header>
@@ -625,13 +629,14 @@
 			</div>
 		{% endblock offcanvases %} 
 		
+		<div class="container-xxl p-0">
+			{% block content %} 
+			{% endblock content %} 
+		</div>
 
-		{% block content %} 
-		{% endblock content %} 
-		
 		{% block footer %}
 			<footer class="p-4 mt-5 bg-dark text-gray">
-				<div class="container">
+				<div class="container-xxl">
 					<div class="row justify-content-around">
 						<div class="col-5 col-md-2 my-2 me-2">
 							<h5>Useful Links</h5>
